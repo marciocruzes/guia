@@ -1,0 +1,86 @@
+<!--<app-header></app-header>-->
+<div id="header" class="signOn fixed-top" style="background-color: #009a59;height:70px;">
+        <header>
+            <div style="height: 15px;"></div>
+            <div class="container-fluid">
+                <div class="row no-gutters">
+                    
+                    <div class="col-2" style="top:15px">
+                        <a [routerLink]="['/guia-medico']" routerLinkActive="router-link-active">
+                            <span><i class="fa fa-chevron-left" aria-hidden="true"></i></span>
+                        </a>
+                    </div>
+                    <div class="col-8">
+                        <h1 class="title" style="font-size:18px">Guia Médico - Resultados</h1>
+                    </div>
+                    <div class="col-2">
+                        <a routerLink="/notificacoes" class="iconNofificacoes" *ngIf="flagNotificacoes">
+                            <span *ngIf="notificacoes.length > 0"> {{ notificacoes.length }} </span>
+                        </a>
+                        
+                        <a routerLink="/painel" class="iconHome" *ngIf="flagHome"></a>
+                        
+                    </div>
+                </div>
+            </div>
+            <div style="position:absolute; top:70px;  text-align: center; width: 100%; height: 60px; background-color:#f8f8f8; font-size: 12px; border-bottom: solid #009a59 1px">
+                    <div style="text-align: center; width: 100%; height: 10px;"></div>
+                
+                    Resultados para <span style="color:#009a59">"{{filtroBusca}}"</span>
+                
+            </div> 
+        </header>
+          
+    </div>
+<app-menu></app-menu>
+
+<div id="mainContent" class="defaultPage">
+
+    <app-mensagem></app-mensagem>
+    
+	<div class="container">
+		<div class="row">
+			<div class="col-12">            
+				<div class="resultList">
+                        <div style="text-align: center; width: 100%; height: 50px;"></div>
+					<ul>
+						<li *ngFor="let medico of medicos">
+                            <a [routerLink]="['/guia-medico/detalhe/', medico.id]" (click)="getDetalhe(medico)">
+
+                                <h2>{{ medico.nomePrestador }}</h2>
+                                
+                                <!-- Certificado -->
+                                <p [class]="certificadoTitulo(medico.certificados)"></p>
+                                <p [class]="certificadoResidencia(medico.certificados)"></p>
+                                <p [class]="certificadoACBA(medico.certificados)"></p>
+                                <p [class]="certificadoADICQ(medico.certificados)"></p>
+                                <p [class]="certificadoAIQG(medico.certificados)"></p>
+                                <p [class]="certificadoAONA(medico.certificados)"></p>
+                                <p [class]="certificadoAPALC(medico.certificados)"></p>
+                                <p [class]="certificadoN(medico.certificados)"></p>
+                                <p [class]="certificadoQ(medico.certificados)"></p>
+
+                                <!-- Demais informações do prestador -->
+                                <p class="especialidade">{{ medico.especialidade }}</p>
+								<p class="endereco" style="font-size:12px">{{ medico.logradouro }} - {{ medico.nomeBairro }} - {{ medico.nomeMunicipio }} / {{ medico.uf }}</p>
+								<p class="telefone" *ngIf="medico.telefones" style="font-size:12px">{{ medico.telefones[0] }}</p>
+                                <p class="distancia" *ngIf="medico.distancia">{{ medico.distancia.replace(".",",") }} Km</p>
+                                <p class="telefone" style="color: #009a59; font-size:12px">+ detalhes</p>
+                            </a>
+                        </li>
+                        
+                    </ul>                                
+
+                    <p class="notresult" *ngIf="resultado" >{{ resultado }}</p>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<ng2-slim-loading-bar color="#00995d" height="5px"></ng2-slim-loading-bar>
+
+<!--<app-controls back="/guia-medico"></app-controls>-->
